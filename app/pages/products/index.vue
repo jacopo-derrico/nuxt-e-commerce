@@ -28,7 +28,7 @@
 
         <template #body>
             <figure class="aspect-square w-full flex items-center justify-center overflow-hidden p-4 max-h-50">
-                <img class="h-full" :src="product.image" :alt="product.title">
+                <img class="h-full" :src="product.images[0]" :alt="product.title">
             </figure>
         </template>
 

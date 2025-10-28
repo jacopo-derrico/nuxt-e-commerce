@@ -10,8 +10,9 @@ export const useProductsStore = defineStore('products', () => {
     loading.value = true
     error.value = ''
     try {
-      const res = await fetch('https://fakestoreapi.com/products')
-      products.value = await res.json()
+      const res = await fetch('https://dummyjson.com/products')
+      const data = await res.json()
+      products.value = data.products
     } catch (e) {
       error.value = 'Failed to fetch products'
     }
@@ -22,8 +23,9 @@ export const useProductsStore = defineStore('products', () => {
     loading.value = true
     error.value = ''
     try {
-      const res = await fetch(`https://fakestoreapi.com/products/${id}`)
+      const res = await fetch(`https://dummyjson.com/products/${id}`)
       const data = await res.json()
+      products.value = data.products
       loading.value = false
       return data
     } catch (e) {
