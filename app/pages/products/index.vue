@@ -23,12 +23,13 @@
         class="[--spotlight-color:blue]"
       >
         <template #header>
-            <h2 class="text-xl font-semibold">{{ product.title }}</h2>
+            <h2 class="text-xl font-semibold line-clamp-2">{{ product.title }}</h2>
         </template>
 
         <template #body>
-            <img :src="product.image" :alt="product.title" class="w-full" />
-            <p class="mt-2 text-gray-700 flex-grow">{{ product.description }}</p>
+            <figure class="aspect-square w-full flex items-center justify-center overflow-hidden p-4 max-h-50">
+                <img class="h-full" :src="product.image" :alt="product.title">
+            </figure>
         </template>
 
         <template #footer>
@@ -55,6 +56,8 @@ import { ref, computed, onMounted } from 'vue'
 import { useProductsStore } from '../stores/products'
 import { useCartStore } from '../stores/cart'
 import { storeToRefs } from 'pinia'
+
+const appConfig = useAppConfig()
 
 // fetch products
 const productsStore = useProductsStore()
