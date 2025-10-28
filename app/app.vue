@@ -52,11 +52,13 @@
       </template>
     </UHeader>
 
-    <UBreadcrumb v-if="route.path !== '/'" :items="breadcrumb">
-      <template #separator>
-        <span class="mx-2 text-muted">/</span>
-      </template>
-    </UBreadcrumb>
+    <UContainer class="mt-2 mb-4">
+      <UBreadcrumb v-if="route.path !== '/'" :items="breadcrumb">
+        <template #separator>
+          <span class="mx-2 text-muted">/</span>
+        </template>
+      </UBreadcrumb>
+    </UContainer>
 
     <UMain>
       <NuxtPage />
@@ -122,16 +124,26 @@
 
   const breadcrumb = computed<BreadcrumbItem[]>(() => {
     const pathSegments = route.path.split('/').filter(Boolean);
-    const crumbs: BreadcrumbItem[] = [{ label: 'Home', to: '/' }];
+    const crumbs: BreadcrumbItem[] = [{ 
+      label: 'Home', 
+      to: '/',
+      active: false // Disable active state for Home
+    }];
 
     if (pathSegments[0] === 'products') {
       crumbs.push({ label: 'Products', to: '/products' });
 
       if (pathSegments.length > 1) {
-        const productIdSegment = pathSegments[1];
-        const productId = productIdSegment.split('-')[0];
-        crumbs.push({ label: `Product ${productId}`, to: `/products/${productIdSegment}` });
+        const productIdSegment = pathSegments[1] ?? '';
+        if (productIdSegment) {
+          const productPath = productIdSegment.split('-');
+          const productTitle = productPath.slice(1).join(' ');
+          crumbs.push({ label: productTitle.charAt(0).toUpperCase() + productTitle.slice(1), to: `/products/${productIdSegment}` });
+        }
       }
+    } else if(route.name !== undefined) {
+      const currentPage = route.name
+      crumbs.push({ label: String(currentPage).charAt(0).toUpperCase() + String(currentPage).slice(1).toLowerCase(), to: route.path });
     }
 
     return crumbs;
