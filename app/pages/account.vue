@@ -8,7 +8,7 @@
                 <p><strong>Username:</strong> {{ user.username }}</p>
                 <p v-if="user.address"><strong>Address:</strong> {{ user.address }}</p>
                 <p v-if="user.phone"><strong>Phone:</strong> {{ user.phone }}</p>
-                <UButton @click="logout" color="red">Logout</UButton>
+                <UButton @click="logout" color="error">Logout</UButton>
             </div>
             <div v-else class="text-gray-600">
                 <p>You are not logged in. <a href="/login" class="text-blue-600 hover:underline">Login here</a></p>
