@@ -13,17 +13,17 @@
         <UColorModeButton />
 
         <UButton            
-          color="neutral"
-          variant="ghost"
-          to="/cart"
-          icon="eva:shopping-cart-outline"
-          aria-label="Cart"
-          :chip="{ // load from store the number of items in cart
-            value: 3,
-            color: 'primary',
-            position: 'top-right'
-          }"
-        />
+            color="neutral"
+            variant="ghost"
+            to="/cart"
+            icon="eva:shopping-cart-outline"
+            aria-label="Cart"
+            :chip="{ // load from store the number of items in cart
+              value: 3,
+              color: 'primary',
+              position: 'top-right'
+            }"
+          />
 
         <!-- render if not logged -->
         <UButton 
@@ -102,6 +102,7 @@
 <script setup lang="ts">
   import { computed } from 'vue';
   import { useLoginStore } from '../stores/login';
+  import { storeToRefs } from 'pinia';
   import { useRoute } from 'vue-router';  
   import type { NavigationMenuItem, BreadcrumbItem } from '@nuxt/ui';
   import { chip } from '#build/ui';
@@ -109,7 +110,7 @@
   const route = useRoute();
 
   const userStore = useLoginStore();
-  const user = computed(() => userStore.user);
+  const { user } = storeToRefs(userStore);
 
   const items = computed<NavigationMenuItem[]>(() => [
     {

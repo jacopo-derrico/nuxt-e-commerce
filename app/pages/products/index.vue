@@ -61,7 +61,7 @@ const appConfig = useAppConfig()
 
 // fetch products
 const productsStore = useProductsStore()
-productsStore.fetchProducts()
+await productsStore.fetchProducts()
 
 const { products, loading, error } = storeToRefs(productsStore)
 const cartStore = useCartStore()
