@@ -13,16 +13,36 @@
         <UColorModeButton />
 
         <UButton            
-          color="neutral"
-          variant="ghost"
-          to="/cart"
-          icon="eva:shopping-cart-outline"
-          aria-label="Cart"
-          :chip="{
-            color: 'primary',
-            position: 'top-right'
-          }"
-        />
+            color="neutral"
+            variant="ghost"
+            to="/cart"
+            icon="eva:shopping-cart-outline"
+            aria-label="Cart"
+            :chip="{ // load from store the number of items in cart
+              value: 3,
+              color: 'primary',
+              position: 'top-right'
+            }"
+          />
+
+        <!-- render if not logged -->
+        <UButton 
+          v-if="user === null"
+          color="primary"
+          variant="solid"
+          to="/login"
+          icon="eva:person-outline"
+          aria-label="Login"
+        >Login</UButton>
+        <!-- render if logged -->
+        <UButton 
+          v-else
+          color="primary"
+          variant="solid"
+          to="/account"
+          aria-label="Login"
+        >
+        <UAvatar :src="user.image" />{{ user.firstName }}</UButton>
 
       </template>
 
@@ -81,11 +101,16 @@
 
 <script setup lang="ts">
   import { computed } from 'vue';
+  import { useLoginStore } from '../stores/login';
+  import { storeToRefs } from 'pinia';
   import { useRoute } from 'vue-router';  
   import type { NavigationMenuItem, BreadcrumbItem } from '@nuxt/ui';
-import { chip } from '#build/ui';
+  import { chip } from '#build/ui';
 
-  const route = useRoute()
+  const route = useRoute();
+
+  const userStore = useLoginStore();
+  const { user } = storeToRefs(userStore);
 
   const items = computed<NavigationMenuItem[]>(() => [
     {
